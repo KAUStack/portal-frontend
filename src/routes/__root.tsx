@@ -2,7 +2,6 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
-  redirect,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
@@ -11,13 +10,12 @@ import {Header} from '../components/Header.tsx'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-import { getLocale, shouldRedirect } from '@/paraglide/runtime'
+import { getLocale } from '@/paraglide/runtime'
 
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 
-import { ThemeProvider } from "../components/theme-provider"
 import { BootGate } from '@/components/BootGate.tsx'
 
 
@@ -69,18 +67,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
           <Header />
           <BootGate>{children}</BootGate>
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
           <Scripts />
       </body>
     </html>

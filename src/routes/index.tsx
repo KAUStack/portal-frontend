@@ -1,78 +1,36 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
-  Zap,
-  Server,
-  Route as RouteIcon,
-  Shield,
-  Waves,
-  SaudiRiyal,
-  Download,
-  GitBranch,
-  RefreshCw,
-  KeyRound,
-  Cloudy,
-  TrendingUp,
-  Megaphone,
-  Sigma,
-  Calculator,
-  FileQuestion,
-  Plus
+    Zap,
+    SaudiRiyal,
+    Download,
+    GitBranch,
+    RefreshCw,
+    KeyRound,
+    Cloudy,
+    TrendingUp,
+    Megaphone,
+    Sigma,
+    Calculator,
+    Plus,
+    LogIn, Send,
+
 } from 'lucide-react'
 
-import { ArrowRight, Layers, Code2, Users, Rocket, Database, Globe, ChevronRight, Search, Calendar, BookOpen, GraduationCap, ExternalLink } from 'lucide-react';
+import { ArrowRight, Layers, Code2, Users, Rocket, Search, Calendar, BookOpen, GraduationCap, ExternalLink } from 'lucide-react';
 import LightRays from '../components/LightRays';
-import { use, useEffect } from 'react';
 
 import { Sparkles } from '../components/animate-ui/icons/sparkles';
+import {Particles} from "@/components/ui/particles.tsx";
+import {TopographyBackground} from "@/components/ui/topography.tsx";
+
 export const Route = createFileRoute('/')({ component: App })
 
 function App() {
-  const features = [
-    {
-      icon: <Zap className="w-12 h-12 text-cyan-400" />,
-      title: 'Powerful Server Functions',
-      description:
-        'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
-    },
-    {
-      icon: <Server className="w-12 h-12 text-cyan-400" />,
-      title: 'Flexible Server Side Rendering',
-      description:
-        'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
-    },
-    {
-      icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-      title: 'API Routes',
-      description:
-        'Build type-safe API endpoints alongside your application. No separate backend needed.',
-    },
-    {
-      icon: <Shield className="w-12 h-12 text-cyan-400" />,
-      title: 'Strongly Typed Everything',
-      description:
-        'End-to-end type safety from server to client. Catch errors before they reach production.',
-    },
-    {
-      icon: <Waves className="w-12 h-12 text-cyan-400" />,
-      title: 'Full Streaming Support',
-      description:
-        'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
-    },
-    {
-      icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-      title: 'Next Generation Ready',
-      description:
-        'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
-    },
-  ]
-  const isDark =
-    typeof document !== "undefined" &&
-    document.documentElement.classList.contains("dark")
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Hero Section - Simplified */}
-      <section className="relative py-32 md:py-24">
+      <section className="relative py-32 md:py-20">
         {/* Light Rays from react bits background, hidden in white mode */}
         <div className="absolute inset-0 dark:block hidden">
           <LightRays
@@ -120,7 +78,7 @@ function App() {
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-4">
               <Layers className="w-8 h-8 text-primary drop-shadow-[0_0_12px_rgba(0,255,136,0.5)]" />
-              <h2 className="text-3xl md:text-4xl font-bold">Official KAUStack Services</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Official Stack Services</h2>
             </div>
             <p className="text-lg text-muted-foreground">
               Core services built and maintained by the KAUStack team
@@ -133,7 +91,7 @@ function App() {
               {
                 name: 'KAUIndex',
                 tagline: 'Course & Section Search',
-                desc: 'Find courses, check availability, and view instructor ratings',
+                desc: 'Find courses and sections with advanced filtering for a powerful searching experience',
                 icon: Search,
                 status: 'Live',
                 link: 'https://kauindex.com',
@@ -151,8 +109,28 @@ function App() {
               {
                 name: 'KAUGroups',
                 tagline: 'Student Communities',
-                desc: 'Connect with study groups and campus organizations',
+                desc: 'Find Whatsapp groups based on your own schedule with ease',
                 icon: Users,
+                status: 'Beta',
+                link: '#',
+                color: 'primary',
+              },
+
+              {
+                name: 'KAUDevs',
+                tagline: 'Developer Resources',
+                desc: 'Learn how to build on the stack, access documentation, and learn for free',
+                icon: Code2,
+                status: 'Coming Soon',
+                link: '#',
+                color: 'primary',
+              },
+
+              {
+                name: 'KAUSubjects',
+                tagline: 'Subject Explorer',
+                desc: 'Explore subjects, rate, and review them with the community',
+                icon: BookOpen,
                 status: 'Coming Soon',
                 link: '#',
                 color: 'primary',
@@ -161,13 +139,21 @@ function App() {
               <a
                 key={index}
                 href={service.link}
-                className="group relative block p-8 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-xl border-2 border-primary/20 rounded-sm hover:border-primary/50 hover:scale-[1.02] transition-all duration-300 shadow-xl hover:shadow-primary/20"
+                className={`group relative block p-8 bg-card from-card/90 to-card/70 backdrop-blur-xl border-2 border-primary/20 rounded-sm hover:border-primary/50 hover:scale-[1.02] transition-all duration-300 shadow-xl hover:shadow-primary/20 ${
+  service.status === 'Live'
+    ? 'border-primary/40 hover:border-primary/60'
+    : service.status === 'Beta'
+    ? 'border-primary/40 hover:border-accent/60'
+    : service.status === 'Coming Soon'
+    ? 'border-dashed border-muted/30 opacity-95'
+    : ''
+}`}
               >
 
                 <div className="relative">
                   {/* Status badge */}
                   <div className="absolute -top-4 -right-4">
-                    <div className={`px-3 py-1 ${service.status === 'Live' ? 'bg-primary/20 border-primary/40' : service.status === 'Beta' ? 'bg-accent/20 border-accent/40' : 'bg-muted/20 border-border'} border rounded-full`}>
+                    <div className={`px-3 py-1 ${service.status === 'Live' ? 'hidden bg-primary/20 border-primary/40' : service.status === 'Beta' ? 'bg-accent/20 border-accent/40' : 'bg-muted/20 border-border'} border rounded-sm`}>
                       <span className={`text-xs font-bold ${service.status === 'Live' ? 'text-primary' : service.status === 'Beta' ? 'text-accent' : 'text-muted-foreground'}`}>
                         {service.status}
                       </span>
@@ -216,7 +202,7 @@ function App() {
             {[
               {
                 name: 'Schedly',
-                desc: 'Generate all possible class schedules and pick the optimal one, using the raw power of algorithms.',
+                desc: 'Generate all possible class schedules and pick the best one, using the raw power of algorithms.',
                 author: 'Yasir Alghamdi',
                 icon: Sigma,
                 link: 'http://schedly.y-tools.xyz/',
@@ -265,10 +251,6 @@ function App() {
                     <p className="text-sm2 text-muted-foreground">by {project.author}</p>
                   </div>
 
-                  {/* Sponsored badge */}
-                  <div className="absolute top-4 right-4">
-                    <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_rgba(10,77,46,0.5)] animate-pulse" />
-                  </div>
                 </div>
               </a>
             ))}
@@ -279,12 +261,12 @@ function App() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="text-2xl font-bold mb-2">Want to build with us?</h3>
-                <p className="text-muted-foreground">Get your project featured here with free hosting, infrastructure, and support</p>
+                <p className="text-muted-foreground">Get your project featured here with free hosting, infrastructure, and tech support</p>
               </div>
               <button
                 onClick={() => {
                   const el = document.getElementById('developers');
-                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }}
                 aria-label="Scroll to Developers section"
                 className="px-8 py-4 bg-accent text-accent-foreground rounded-sm hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-lg whitespace-nowrap cursor-pointer"
@@ -299,14 +281,18 @@ function App() {
 
 
       {/* Solution Section - Mind Blowing */}
-      <section className="relative py-32 border-t border-primary/10">
+      <section className=" relative py-32 border-t border-primary/10">
+
+          <TopographyBackground
+              className="absolute inset-0 z-0 pointer-events-none hidden dark:absolute dark:block"
+              lineColor="#001a0d"
+              backgroundColor="#000000"
+          />
 
         <div className="relative max-w-7xl mx-auto px-6">
+
           <div className="text-center max-w-4xl mx-auto mb-20">
-            <div className="inline-flex items-center gap-2 px-5 py-2 bg-primary/20 border border-primary/40 rounded-full mb-8 shadow-lg shadow-primary/30">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold uppercase tracking-wide">The KAUStack Solution</span>
-            </div>
+
 
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               The only
@@ -317,8 +303,7 @@ function App() {
             </h2>
 
             <p className="text-xl text-muted-foreground">
-              A unified platform built with cutting-edge technology. Say goodbye to fragmentation.
-            </p>
+                Open source by design. Student-first by mission. The infrastructure KAU Students deserve.            </p>
           </div>
 
           {/* Feature List - Clean & Minimal */}
@@ -327,25 +312,25 @@ function App() {
               {
                 icon: GitBranch,
                 title: 'Open Source First',
-                desc: 'Transparent from the ground up. Built by students, for students. Read the code, contribute, and build with us.',
+                desc: 'KAUStack is built in the open, we have nothing to hide, and everything to show, every line of code is readable, auditable, and improvable.',
                 metric: 'For The Greater Good'
               },
               {
                 icon: SaudiRiyal,
-                title: 'Forever Free',
+                title: 'Truly Free, Forever',
                 desc: 'Education support shouldn’t have a paywall. All services are free, forever.',
                 metric: 'You Can Never Beat Free'
               },
               {
                 icon: RefreshCw,
                 title: 'Smart Sync',
-                desc: 'Seamlessly synchronize schedules and settings across the entire stack in real-time.',
+                desc: 'Schedules, preferences, and data flow seamlessly across the entire KAUStack ecosystem in real time. Update once, reflect everywhere.',
                 metric: 'Live Updates'
               },
               {
                 icon: Users,
-                title: 'Student-First',
-                desc: 'Built by students who understand your needs and challenges.',
+                title: 'A Community Effort',
+                desc: 'This isn\'t a corporate project, It’s built by your peers who face the same challenges you do every day.',
                 metric: '1000+ Users'
               },
             ].map((feature, index) => (
@@ -356,7 +341,7 @@ function App() {
                 {/* Icon */}
                 <div className="shrink-0">
                   <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-all">
-                    <feature.icon className="w-8 h-8 text-primary drop-shadow-[0_0_12px_rgba(0,255,136,0.5)]" />
+                    <feature.icon className="w-8 h-8 text- drop-shadow-[0_0_12px_rgba(0,255,136,0.5)]" />
                   </div>
                 </div>
 
@@ -364,10 +349,6 @@ function App() {
                 <div className="flex-1 pt-2">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-2xl font-bold">{feature.title}</h3>
-                    <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(0,255,136,0.6)]" />
-                      <span className="text-sm font-semibold text-primary whitespace-nowrap">{feature.metric}</span>
-                    </div>
                   </div>
                   <p className="text-muted-foreground text-lg leading-relaxed">{feature.desc}</p>
                 </div>
@@ -377,10 +358,7 @@ function App() {
 
           {/* Central Value Proposition, will be used and added for the login sign in page */}
           <div className="max-w-5xl mx-auto">
-            <div className="relative p-12 bg-gradient-to-br from-card/90 to-card/60 backdrop-blur-xl border-2 border-primary/30 rounded-3xl shadow-2xl shadow-primary/10">
-              {/* Decorative elements */}
-              <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl" />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
+            <div className="relative p-12 bg-background from-card/90 to-card/60 backdrop-blur-xl border-2 border-primary/30 rounded-3xl shadow-2xl shadow-primary/10">
 
               <div className="relative">
                 <div className="text-center mb-8">
@@ -410,8 +388,26 @@ function App() {
                     </div>
                   ))}
                 </div>
+
+
+                  <div className="flex justify-center items-center mt-12 w-full gap-10">
+                      <button
+                          onClick={() => {
+                              const el = document.getElementById('developers');
+                              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }}
+                          aria-label="Scroll to Developers section"
+                          className="px-8 py-4 bg-accent text-accent-foreground rounded-sm hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-lg whitespace-nowrap cursor-pointer"
+                      >
+                          <span className="font-semibold">Log in / Sign in </span>
+                          <LogIn className="w-5 h-5" />
+                      </button>
+                  </div>
+
               </div>
+
             </div>
+
           </div>
         </div>
       </section>
@@ -442,7 +438,7 @@ function App() {
               <div className='inline-flex gap-6'>
                 <button className="px-8 py-4 bg-primary text-primary-foreground rounded-sm hover:scale-105 transition-all duration-300 flex items-center gap-3 cursor-pointer">
                   <span className="font-semibold">Contact Us</span>
-                  <Rocket className="w-5 h-5" />
+                  <Send className="w-5 h-5" />
                 </button>
 
                 <a href='/KAUStack-1-1.pdf' target="_blank" rel="noopener noreferrer"
@@ -473,11 +469,20 @@ function App() {
 
       {/* Vision Section - Grand */}
       <section className="relative py-32 border-t border-primary/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,136,0.1),transparent_70%)]" />
+
+        <div className="absolute inset-0" />
+
+          <div className="absolute inset-0 z-0 hidden dark:absolute dark:block">
+              <Particles className="absolute inset-0" quantity={200} staticity={30} />
+          </div>
 
         <div className="relative max-w-6xl mx-auto px-6 text-center">
+
+
           <div className="max-w-4xl mx-auto">
-            <Sparkles animateOnView animateOnViewOnce={false} animation="path-loop" animateOnViewMargin="0px" className="w-16 h-16 text-primary mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0,255,136,0.5)]" />
+
+
+            <Sparkles animateOnView animateOnViewOnce={false} animation="path-loop" animateOnViewMargin="0px" className="w-26 h-26 text-primary mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0,255,136,0.5)]" />
 
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
               Just the Beginning
@@ -489,25 +494,21 @@ function App() {
               <span className="text-foreground font-medium">Join us on this journey.</span>
             </p>
 
-            <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/40 rounded-full shadow-lg shadow-primary/20">
-              <div className="flex -space-x-2">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-background" />
-                ))}
-              </div>
-              <span className="text-foreground font-medium">1,000+ students already waiting</span>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Footer - Sleek */}
-      <footer className="relative py-16 border-t border-primary/10 bg-card/30 backdrop-blur-xl">
+      <footer className="relative py-10 border-t border-primary/10 bg-card/30 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
             {/* Brand */}
             <div className="flex items-center gap-3">
-              <Layers className="w-7 h-7 text-primary drop-shadow-[0_0_12px_rgba(0,255,136,0.5)]" />
+						{<img
+							src="/src/assets/kaustack_logo.svg"
+							alt="KAU Logo"
+							className="h-12 w-12 object-contain transition-transform group-hover:scale-105"
+						/>}
               <div>
                 <div className="font-bold text-xl">KAUStack</div>
                 <div className="text-xs text-muted-foreground">Student-Powered Innovation</div>
@@ -521,14 +522,11 @@ function App() {
 
             {/* Social links */}
             <div className="flex items-center gap-6">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://github.com/KAUStack" className="text-muted-foreground hover:text-primary transition-colors">
                 GitHub
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://x.com/KauIndex" className="text-muted-foreground hover:text-primary transition-colors">
                 Twitter
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Discord
               </a>
             </div>
           </div>
