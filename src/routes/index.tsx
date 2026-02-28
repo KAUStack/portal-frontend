@@ -505,7 +505,7 @@ function App() {
             {/* Brand */}
             <div className="flex items-center gap-3">
 						{<img
-							src="/src/assets/kaustack_logo.svg"
+							src="/kaustack_logo.svg"
 							alt="KAU Logo"
 							className="h-12 w-12 object-contain transition-transform group-hover:scale-105"
 						/>}
