@@ -66,7 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
           <Header />
-          <BootGate>{children}</BootGate>
+          <BootGate >{children}</BootGate>
           <Scripts />
       </body>
     </html>

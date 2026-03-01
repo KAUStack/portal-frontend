@@ -1,12 +1,21 @@
 import {useState} from "react";
 import {useNavigate, Link} from "@tanstack/react-router";
-import { LogIn} from "lucide-react";
+import { LogIn, CheckLineIcon, User, LogOut } from "lucide-react";
 import ThemeToggle from "./ThemeToggle"
 import {Button} from "@/components/ui/button.tsx";
+import {useAuth} from "@/hooks/use-auth.tsx";
+
 
 export function Header() {
-    const navigate = useNavigate();
     const [open, setOpen] = useState(false); // State to close sheet on navigation
+
+    const { data: user, isLoading } = useAuth();
+    const navigate = useNavigate();
+
+
+    const handleLogin = () => {
+        window.location.href = "https://api.kaustack.com/auth/login";
+    }
 
     return (
         <header
@@ -16,8 +25,6 @@ export function Header() {
                 className="flex items-center gap-3 cursor-pointer select-none group"
                 onClick={() => navigate({to: "/"})}
             >
-
-
                 <div>
                     <div className="flex items-center gap-3">
 
@@ -42,12 +49,28 @@ export function Header() {
             <nav className="flex items-center gap-3">
                 {/* 1. Theme Toggle (Visible on all screens) */}
 
-                <Button className="flex items-center gap-3 rounded-sm cursor-pointer">
-                    <LogIn></LogIn>
-                    <span>Login</span>
-                </Button>
-
                 <ThemeToggle/>
+
+                {isLoading ? (
+                    <div className="h-9 w-20 animate-pulse bg-muted rounded-sm" />
+                ) : user ? (
+                    // User is logged in
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-sm font-medium">
+                            <User className="h-4 w-4" />
+                            <span>{user.name}</span>
+                        </div>
+                        <Button variant="ghost" size="sm" onClick={() => {/* handle logout */}}>
+                            <LogOut className="h-4 w-4" />
+                        </Button>
+                    </div>
+                ) : (
+                    // User is not logged in
+                    <Button onClick={handleLogin} className="flex items-center gap-3 rounded-sm cursor-pointer">
+                        <LogIn className="h-4 w-4" />
+                        <span>Login</span>
+                    </Button>
+                )}
 
                 {/* 2. DESKTOP LINKS (Hidden on mobile) */}
                 <div className="hidden md:flex items-center gap-6 ml-2">
