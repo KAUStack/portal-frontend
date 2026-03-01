@@ -14,7 +14,11 @@ export function Header() {
 
 
     const handleLogin = () => {
-        window.location.href = "https://api.kaustack.com/auth/login";
+
+        const baseURL = import.meta.env.VITE_API_URL;
+
+
+        window.location.href = `${baseURL}/auth/login`;
     }
 
     return (
